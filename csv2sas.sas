@@ -1,11 +1,11 @@
 ***************************************************************;
-* ½«csvÎÄ¼şÅúÁ¿×ªÎªSASÎÄ¼ş£º
-		½«csmarÖĞ¹ÉÆ±ÈÕ½»Ò×µÄ28¸öcsvÎÄ¼şºÏ²¢³ÉÒ»¸öSASÎÄ¼ş
+* å°†csvæ–‡ä»¶æ‰¹é‡è½¬ä¸ºSASæ–‡ä»¶ï¼š
+		å°†csmarä¸­è‚¡ç¥¨æ—¥äº¤æ˜“çš„28ä¸ªcsvæ–‡ä»¶åˆå¹¶æˆä¸€ä¸ªSASæ–‡ä»¶
 ***************************************************************;
 
-libname out "C:\Users\dsf";	 /* Êä³öÊı¾İµÄÄ¿Â¼ */
+libname out "C:\Users\dsf";	 /* è¾“å‡ºæ•°æ®çš„ç›®å½• */
 
-* µÚ4ÁĞÊı¾İÊÇ´ıÑ­»·µÄÎÄ¼şÄ¿Â¼ÁĞ±í;
+* ç¬¬4åˆ—æ•°æ®æ˜¯å¾…å¾ªç¯çš„æ–‡ä»¶ç›®å½•åˆ—è¡¨;
 data temp (keep=file);
 	input dir $ date $ time $ file $;
 datalines;
@@ -41,7 +41,7 @@ datalines;
 run;
 
 
-*¶ÔÃ¿Ò»¸öÎÄ¼şÄ¿Â¼£¬Éú³É1¸öºê±äÁ¿;
+*å¯¹æ¯ä¸€ä¸ªæ–‡ä»¶ç›®å½•ï¼Œç”Ÿæˆ1ä¸ªå®å˜é‡;
 data _null_;
 	set temp  end=eof;
 	call symput('file'||left(_N_), trim(file));	
@@ -53,9 +53,9 @@ data _null_;
 proc printto  log=junk; run;
 %macro csv2sas;
 %do i=1 %to &nfile;
-proc import datafile="C:\Users\dsf\&&file&i\TRD_Dalyr.csv"	* csvÎÄ¼şµÄÄ¿Â¼;
+proc import datafile="C:\Users\dsf\&&file&i\TRD_Dalyr.csv"	/* csvæ–‡ä»¶çš„ç›®å½• */
 	out=work.dsf&i dbms=dlm  replace;	
-	delimter='09'x;		* csmarµÄcsvÎÄ¼şÊÇtab·Ö¸ôµÄ;
+	delimter='09'x;		/* csmarçš„csvæ–‡ä»¶æ˜¯tabåˆ†éš”çš„ */
 	run;
 %end;
 %mend sas2csv;
@@ -63,12 +63,12 @@ proc printto; run;
 
 %csv2sas
 
-*ºÏ²¢Êı¾İ¼¯Îªµ¥¸öÊı¾İÎÄ¼ş;
+*åˆå¹¶æ•°æ®é›†ä¸ºå•ä¸ªæ•°æ®æ–‡ä»¶;
 data out.dsf;
 	set dsf1-dsf28;
 	run;
 
-* É¾È¥ÁÙÊ±Êı¾İ¼¯dsf1-saf28;
+* åˆ å»ä¸´æ—¶æ•°æ®é›†dsf1-saf28;
 proc datasets;
 	delete dsf1-dsf28;
 	quit;
