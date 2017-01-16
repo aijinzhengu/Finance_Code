@@ -25,5 +25,5 @@ proc export data=SASHELP.&&file&i
 %mend sas2csv;
 
 %sas2csv
-
+proc printto  log; run;
 
