@@ -2,7 +2,7 @@
 
 在finance领域，将时间序列对齐（align）是数据处理中经常要用到的，这种对齐可能是时点的对齐（point-in-time），如匹配公司上一年末的财报信息，也可能要对齐到一个区间（interval），如根据过去6个月的股票收益构建投资组合，根据过去8个季度的盈余计算盈余的波动性。利用SAS时间序列处理函数`INTNX`可以比较容易的移动时间序列数据，请看下面的例子。
 
-```
+```sas
 data datetime;
     input stkcd date ;
     date_in_point1=intnx('month', date, 1, 'E');     /* 移动到下个月初 */
