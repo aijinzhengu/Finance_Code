@@ -58,7 +58,7 @@ proc import datafile="C:\Users\dsf\&&file&i\TRD_Dalyr.csv"	/* csv文件的目录
 	delimter='09'x;		/* csmar的csv文件是tab分隔的 */
 	run;
 %end;
-%mend sas2csv;
+%mend csv2sas;
 proc printto; run;
 
 %csv2sas
