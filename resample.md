@@ -1,7 +1,11 @@
 
 # Resample
 
-Finance中常常会用到resample，比如做treatment effect时如果是不放回的匹配需要对样本进行随机化以避免匹配顺序对匹配结果的影响，用bootstrap来获得标准误（standard error）。
+放回和不放回的重抽样，包括treatment effect中控制组和样本组的匹配。
+
+Finance中常常会用到resample，比如（1）做treatment effect时如果是不放回的匹配需要对样本进行随机化以避免匹配顺序对匹配结果的影响，（2）用bootstrap来获得标准误（standard error）。
+
+先生成模拟数据`sim_dat`。
 
 ```sas
 data sim_dat;
@@ -65,7 +69,7 @@ proc print data=post_sim_dat_2 (obs=4); run;
 
 
 ## 无放回的重抽样在treatment effect的应用
-treatment effect分析时，匹配处理组和控制组比较常用的是不放回的抽样，对每个处理组观测，从控制组找到1个最接近（按照某种度量，这里以ps_score为例）的观测与之匹配。已经匹配过的观测不在参与匹配。
+treatment effect分析时，匹配处理组和控制组比较常用的是不放回的抽样，对每个处理组观测，从控制组找到1个最接近（按照某种度量，这里以ps_score为例）的观测与之匹配。已经匹配过的观测不再参与匹配。
 
 处理组观测的顺序会影响匹配结果，因此需要对处理组观测随机化。更加麻烦的是，为了让参加过匹配的控制组观测不参与匹配，需要一个动态的容器来装还可以参加匹配的控制组观测。因为，需要在匹配过程中维持一个散列表（hash table）。
 
@@ -115,7 +119,7 @@ data control_dat (rename=(id=idC ps_score=pscoreC));
 ```
 
 
-利用散列表（hash table）做匹配,使用的是[macro PSmatching](http://home.uchicago.edu/~mcoca/docs/PSmatching.sas)。将文件`PSmatching.sas`放在目录`F:\sascode_macro`下。
+利用散列表（hash table）做匹配,使用的是[macro PSmatching](http://home.uchicago.edu/~mcoca/docs/PSmatching.sas)。将文件`PSmatching.sas`放在目录`F:\sascode_macro`下，调用宏即可。
 
 ```sas
 options sasautos=(sasautos 'F:\sascode_macro');
