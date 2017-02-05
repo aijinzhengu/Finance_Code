@@ -1,7 +1,7 @@
 
 # Resample
 
-放回和不放回的重抽样，包括treatment effect中控制组和样本组的匹配。
+放回和不放回的重抽样，包括treatment effect中控制组和控制组的匹配。
 
 Finance中常常会用到resample，比如（1）做treatment effect时如果是不放回的匹配需要对样本进行随机化以避免匹配顺序对匹配结果的影响，（2）用bootstrap来获得标准误（standard error）。
 
